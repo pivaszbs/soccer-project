@@ -27,4 +27,15 @@ const Tag = (props) => {
     }
 };
 
-export default Tag;
+const firebaseLooper = (snapshot) => {
+    const data = [];
+    snapshot.forEach((childSnapshot)=>{
+        data.push({
+            ...childSnapshot.val(),
+            id: childSnapshot.key
+        });
+    })
+    return data;
+}
+
+export { Tag, firebaseLooper }
