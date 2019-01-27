@@ -48,7 +48,11 @@ export default class AdminMatches extends Component {
                             { this.state.matches ?
                             this.state.matches.map((match,i)=>(
                                 <TableRow key={i}>
-                                    <TableCell>{match.date}</TableCell>
+                                    <TableCell>
+                                        <Link to={`/admin_matches/edit_match/${match.id}`}>
+                                            {match.date}
+                                        </Link>
+                                    </TableCell>
                                     <TableCell>
                                         <Link to={`/admin_matches/edit_match/${match.id}`}>
                                             {match.away}<strong>-</strong>{match.local}
@@ -56,12 +60,14 @@ export default class AdminMatches extends Component {
                                     </TableCell>
                                     <TableCell>{match.resultAway}<strong>-</strong>{match.resultLocal}</TableCell>
                                     <TableCell>
-                                    {
-                                        match.final === "Yes" ?
-                                        <span className="matches_tag_red">Final</span>
-                                    :
-                                        <span className="matches_tag_green"></span>
-                                    }
+                                        <Link to={`/admin_matches/edit_match/${match.id}`}>
+                                            {
+                                                match.final === "Yes" ?
+                                                <span className="matches_tag_red">Final</span>
+                                            :
+                                                <span className="matches_tag_green"></span>
+                                            }
+                                        </Link>
                                     </TableCell>
                                 </TableRow>
                             ))
