@@ -181,6 +181,11 @@ export default class AddEditMactch extends Component {
             formdata: newFormdata
         })
     }
+    
+    componentDidMount() {
+      console.log(this.props);
+    }
+    
 
     render() {
     return (
