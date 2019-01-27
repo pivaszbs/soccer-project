@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom';
 import AdminLayout from '../../../hoc/AdminLayout';
 
@@ -8,60 +8,66 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { firebaseMatches } from '../../../firebase';
 import { firebaseLooper } from '../../ui/misc';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { firebasePlayers } from '../../../firebase';
 
+class AdminPlayers extends Component {
 
-export default class AdminMatches extends Component {
 
     state = {
         isloading: true,
-        matches: []
+        players: []
     }
 
     componentDidMount() {
-        firebaseMatches.once('value').then(snapshot => {
-            const matches = firebaseLooper(snapshot);
+        firebasePlayers.once('value').then(snapshot => {
+            const players = firebaseLooper(snapshot);
             this.setState({
                 isloading: false,
-                matches: matches.reverse()
+                players: players.reverse()
             });
         })
     }
 
+
     render() {
         return (
             <AdminLayout>
-                <div>
+                <Fragment>
                     <Paper>
                         <Table>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Date</TableCell>
-                                    <TableCell>Match</TableCell>
+                                    <TableCell>Player</TableCell>
                                     <TableCell>Result</TableCell>
                                     <TableCell>Final</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.matches ?
-                                    this.state.matches.map((match, i) => (
+                                {this.state.players ?
+                                    this.state.players.map((player, i) => (
                                         <TableRow key={i}>
-                                            <TableCell>{match.date}</TableCell>
                                             <TableCell>
-                                                <Link to={`/admin_matches/edit_match/${match.id}`}>
-                                                    {match.away}<strong>-</strong>{match.local}
+                                                <Link to={`admin_players/add_players/${player.id}`}>
+                                                    {player.name}
                                                 </Link>
                                             </TableCell>
-                                            <TableCell>{match.resultAway}<strong>-</strong>{match.resultLocal}</TableCell>
                                             <TableCell>
-                                                {
-                                                    match.final === "Yes" ?
-                                                        <span className="matches_tag_red">Final</span>
-                                                        :
-                                                        <span className="matches_tag_green"></span>
-                                                }
+                                                <Link to={`admin_players/add_players/${player.id}`}>
+                                                    {player.lastname}
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Link to={`admin_players/add_players/${player.id}`}>
+                                                    {player.number}
+                                                </Link>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Link to={`admin_players/add_players/${player.id}`}>
+                                                    {player.position}
+                                                </Link>
                                             </TableCell>
                                         </TableRow>
                                     ))
@@ -77,9 +83,11 @@ export default class AdminMatches extends Component {
                                 : ''
                         }
                     </div>
-                </div>
+                </Fragment>
 
             </AdminLayout>
-        )
+        );
     }
 }
+
+export default AdminPlayers;
