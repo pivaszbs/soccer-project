@@ -40,7 +40,7 @@ class AdminPlayers extends Component {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Date</TableCell>
-                                    <TableCell>player</TableCell>
+                                    <TableCell>Player</TableCell>
                                     <TableCell>Result</TableCell>
                                     <TableCell>Final</TableCell>
                                 </TableRow>
